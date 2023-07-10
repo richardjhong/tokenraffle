@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@thirdweb-dev/sdk": "^3.10.29"
+  }
+}
