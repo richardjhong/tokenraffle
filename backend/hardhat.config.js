@@ -1,4 +1,4 @@
-import "@matterlabs/hardhat-zksync-solc";
+require("@matterlabs/hardhat-zksync-solc");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -24,6 +24,13 @@ module.exports = {
             chainId: 324,
             zksync: true,
         },
+        hardhat: {
+            chainId: 1337,
+        },
+        running: {
+            url: "http://localhost:8545",
+            chainId: 1337,
+        },
     },
     paths: {
         artifacts: "./artifacts-zk",
@@ -32,7 +39,7 @@ module.exports = {
         tests: "./test",
     },
     solidity: {
-        version: "0.8.17",
+        version: "0.8.13",
         settings: {
             optimizer: {
                 enabled: true,
@@ -40,4 +47,5 @@ module.exports = {
             },
         },
     },
+    defaultNetwork: "hardhat",
 };
