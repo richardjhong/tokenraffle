@@ -17,6 +17,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.6.1",
     "@thirdweb-dev/contracts": "^3",
     "zksync-web3": "^0.14.3"
   }

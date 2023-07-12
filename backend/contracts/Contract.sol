@@ -84,10 +84,55 @@ contract NFTRaffleContract {
         require(!raffleStatus, "Raffle is still ongoing");
         require(playerSelector.length > 0, "No players in raffle");
         require(nftAddress != address(0), "NFT prize has not been set yet");
+
+        uint256 winnerIndex = playerSelector.length - 1;
+        address winner = playerSelector[winnerIndex];
+        emit WinnerSelected(winner);
+
+        ERC721Base(nftAddress).transferFrom(owner, winner, nftId);
+        resetContract();
     }
 
-    function random() private view returns (uint256) {
-        return
-            uint256(keccak256(abi.encodePacked(block.prevrandao, block.timestamp, players.length)));
+    // function random() private view returns (uint256) {
+    //     return
+    //         uint256(keccak256(abi.encodePacked(block.prevrandao, block.timestamp, players.length)));
+    // }
+
+    function resetEntryCounts() private {
+        for (uint256 i = 0; i < players.length; i++) entryCount[players[i]] = 0;
+    }
+
+    function changeEntryCost(uint256 _newCost) public onlyOwner {
+        require(!raffleStatus, "Raffle is ongoing");
+        entryCost = _newCost;
+        emit EntryCostChanged(_newCost);
+    }
+
+    function withdrawBalance() public onlyOwner {
+        require(address(this).balance > 0, "No balance to withdraw");
+
+        uint256 balanceAmount = address(this).balance;
+
+        payable(owner).transfer(balanceAmount);
+        emit BalanceWithdrawn(balanceAmount);
+    }
+
+    function getPlayers() public view returns (address[] memory) {
+        return players;
+    }
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    function resetContract() public onlyOwner {
+        delete playerSelector;
+        delete players;
+        raffleStatus = false;
+        nftAddress = address(0);
+        nftId = 0;
+        entryCost = 0;
+        totalEntries = 0;
+        resetEntryCounts();
     }
 }
