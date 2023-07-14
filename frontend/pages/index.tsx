@@ -14,6 +14,7 @@ import {
 } from "@thirdweb-dev/react";
 import { HERO_IMAGE_URL, LOTTERY_CONTRACT_ADDRESS } from "../const/addresses";
 import { ethers } from "ethers";
+import LotteryStatus from "../components/LotteryStatus";
 
 const Home: NextPage = () => {
   const { contract } = useContract(LOTTERY_CONTRACT_ADDRESS);
@@ -26,6 +27,8 @@ const Home: NextPage = () => {
   const entryCostInEther = entryCost
     ? ethers.utils.formatEther(entryCost)
     : "0";
+
+  const { data: raffleStatus } = useContractRead(contract, "raffleStatus");
 
   return (
     <Container
@@ -65,6 +68,7 @@ const Home: NextPage = () => {
               buy, the higher the chance you have of winning the prize!
             </Text>
 
+            <LotteryStatus raffleStatus={raffleStatus} />
             {!isLoadingEntryCost && (
               <Text
                 fontSize={"2xl"}
