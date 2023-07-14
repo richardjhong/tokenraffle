@@ -7,5 +7,7 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true
-  }
+  },
+  "include": ["**/*.ts", "scripts/init.js"],
+  "exclude": ["node_modules"]
 }

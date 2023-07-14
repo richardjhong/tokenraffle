@@ -1,22 +1,29 @@
 import { NextPage } from "next";
 import {
   Box,
+  Button,
   Container,
   Flex,
+  Input,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import {
   MediaRenderer,
+  Web3Button,
+  useAddress,
   useContract,
   useContractRead,
 } from "@thirdweb-dev/react";
 import { HERO_IMAGE_URL, LOTTERY_CONTRACT_ADDRESS } from "../const/addresses";
 import { ethers } from "ethers";
 import LotteryStatus from "../components/LotteryStatus";
+import { useState } from "react";
 
 const Home: NextPage = () => {
+  const address = useAddress();
+
   const { contract } = useContract(LOTTERY_CONTRACT_ADDRESS);
 
   const { data: entryCost, isLoading: isLoadingEntryCost } = useContractRead(
@@ -29,6 +36,21 @@ const Home: NextPage = () => {
     : "0";
 
   const { data: raffleStatus } = useContractRead(contract, "raffleStatus");
+
+  const { data: totalEntries, isLoading: isLoadingTotalEntries } =
+    useContractRead(contract, "totalEntries");
+
+  const [entryAmount, setEntryAmount] = useState<number>(0);
+
+  const entryCostOnSubmit = parseFloat(entryCostInEther) * entryAmount;
+
+  const increaseEntryAmount = () => {
+    setEntryAmount(entryAmount + 1);
+  };
+
+  const decreaseEntryAmount = () => {
+    if (entryAmount > 0) setEntryAmount(entryAmount - 1);
+  };
 
   return (
     <Container
@@ -77,9 +99,52 @@ const Home: NextPage = () => {
                 Cost Per Entry: {entryCostInEther} ETH
               </Text>
             )}
+            {address ? (
+              <Flex flexDirection={"row"}>
+                <Flex
+                  flexDirection={"row"}
+                  w={"25%"}
+                  mr={"40px"}
+                >
+                  <Button onClick={decreaseEntryAmount}>-</Button>
+                  <Input
+                    type={"number"}
+                    value={entryAmount}
+                    onChange={(e) => setEntryAmount(parseInt(e.target.value))}
+                    textAlign={"center"}
+                    mx={2}
+                  />
+                  <Button onClick={increaseEntryAmount}>+</Button>
+                </Flex>
+                <Web3Button
+                  contractAddress={LOTTERY_CONTRACT_ADDRESS}
+                  action={(contract) =>
+                    contract.call("buyEntry", [entryAmount], {
+                      value: ethers.utils.parseEther(
+                        entryCostOnSubmit.toString(),
+                      ),
+                    })
+                  }
+                  isDisabled={!raffleStatus}
+                >{`Buy Ticket(s)`}</Web3Button>
+              </Flex>
+            ) : (
+              <Text fontSize={"xl"}>Connect your wallet to buy entries!</Text>
+            )}
+            {!isLoadingTotalEntries && (
+              <Text
+                ml={4}
+                fontSize={"xl"}
+              >
+                Total entries: {totalEntries.toString()}
+              </Text>
+            )}
           </Stack>
         </Flex>
       </SimpleGrid>
+      <Stack mt={"40px"} textAlign={"center"}>
+        <Text fontSize={"xl"}>Current Raffle Participants:</Text>
+      </Stack>
     </Container>
   );
 };
