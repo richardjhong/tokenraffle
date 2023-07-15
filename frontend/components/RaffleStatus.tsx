@@ -1,11 +1,11 @@
 import { Card, Text } from "@chakra-ui/react";
 import React from "react";
 
-type LotteryStatusProps = {
+type RaffleStatusProps = {
   raffleStatus: boolean;
 };
 
-const LotteryStatus: React.FC<LotteryStatusProps> = ({ raffleStatus }) => {
+const RaffleStatus: React.FC<RaffleStatusProps> = ({ raffleStatus }) => {
   let backgroundColor = raffleStatus ? "green.200" : "red.200";
   let borderColor = raffleStatus ? "green.500" : "red.500";
   let textColor = raffleStatus ? "green.700" : "red.700";
@@ -28,4 +28,4 @@ const LotteryStatus: React.FC<LotteryStatusProps> = ({ raffleStatus }) => {
   );
 };
 
-export default LotteryStatus;
+export default RaffleStatus;
