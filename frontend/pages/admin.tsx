@@ -1,5 +1,4 @@
 import { Container, Flex, Heading } from "@chakra-ui/react";
-import React from "react";
 import AdminRaffleStatus from "../components/AdminRaffleStatus";
 
 const Admin = () => {
