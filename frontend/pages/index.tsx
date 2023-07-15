@@ -16,15 +16,15 @@ import {
   useContract,
   useContractRead,
 } from "@thirdweb-dev/react";
-import { HERO_IMAGE_URL, LOTTERY_CONTRACT_ADDRESS } from "../const/addresses";
+import { HERO_IMAGE_URL, RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 import { ethers } from "ethers";
-import LotteryStatus from "../components/LotteryStatus";
+import RaffleStatus from "../components/RaffleStatus";
 import { useState } from "react";
 
 const Home: NextPage = () => {
   const address = useAddress();
 
-  const { contract } = useContract(LOTTERY_CONTRACT_ADDRESS);
+  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
 
   const { data: entryCost, isLoading: isLoadingEntryCost } = useContractRead(
     contract,
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
               buy, the higher the chance you have of winning the prize!
             </Text>
 
-            <LotteryStatus raffleStatus={raffleStatus} />
+            <RaffleStatus raffleStatus={raffleStatus} />
             {!isLoadingEntryCost && (
               <Text
                 fontSize={"2xl"}
@@ -117,7 +117,7 @@ const Home: NextPage = () => {
                   <Button onClick={increaseEntryAmount}>+</Button>
                 </Flex>
                 <Web3Button
-                  contractAddress={LOTTERY_CONTRACT_ADDRESS}
+                  contractAddress={RAFFLE_CONTRACT_ADDRESS}
                   action={(contract) =>
                     contract.call("buyEntry", [entryAmount], {
                       value: ethers.utils.parseEther(
@@ -142,7 +142,10 @@ const Home: NextPage = () => {
           </Stack>
         </Flex>
       </SimpleGrid>
-      <Stack mt={"40px"} textAlign={"center"}>
+      <Stack
+        mt={"40px"}
+        textAlign={"center"}
+      >
         <Text fontSize={"xl"}>Current Raffle Participants:</Text>
       </Stack>
     </Container>

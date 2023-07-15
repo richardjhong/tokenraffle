@@ -6,12 +6,12 @@ import {
   useContractRead,
 } from "@thirdweb-dev/react";
 import Link from "next/link";
-import { LOTTERY_CONTRACT_ADDRESS } from "../const/addresses";
+import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 
 const Navbar = () => {
   const address = useAddress();
 
-  const { contract } = useContract(LOTTERY_CONTRACT_ADDRESS);
+  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
 
   const { data: owner, isLoading: isLoadingOwner } = useContractRead(
     contract,
