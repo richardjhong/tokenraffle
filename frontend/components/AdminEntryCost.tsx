@@ -45,6 +45,7 @@ const AdminEntryCost = () => {
             ethers.utils.parseEther(entryCostValue.toString()),
           ])
         }
+        isDisabled={raffleStatus}
       >
         Update Entry Cost
       </Web3Button>
