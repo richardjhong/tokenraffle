@@ -20,6 +20,7 @@ import { HERO_IMAGE_URL, RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 import { ethers } from "ethers";
 import RaffleStatus from "../components/RaffleStatus";
 import { useState } from "react";
+import PrizeNFT from "../components/PrizeNFT";
 
 const Home: NextPage = () => {
   const address = useAddress();
@@ -63,11 +64,15 @@ const Home: NextPage = () => {
         minH={"60vh"}
       >
         <Flex>
-          <MediaRenderer
-            src={HERO_IMAGE_URL}
-            width='100%'
-            height='100%'
-          />
+          {raffleStatus ? (
+            <PrizeNFT />
+          ) : (
+            <MediaRenderer
+              src={HERO_IMAGE_URL}
+              width='100%'
+              height='100%'
+            />
+          )}
         </Flex>
         <Flex
           justifyContent={"center"}
