@@ -1,6 +1,7 @@
 import { Card, Container, Divider, Flex, Heading } from "@chakra-ui/react";
 import AdminRaffleStatus from "../components/AdminRaffleStatus";
 import AdminEntryCost from "../components/AdminEntryCost";
+import AdminWithdrawBalance from "../components/AdminWithdrawBalance";
 
 const Admin = () => {
   return (
@@ -19,6 +20,7 @@ const Admin = () => {
         >
           <AdminEntryCost />
           <Divider mt={4} />
+          <AdminWithdrawBalance />
         </Card>
       </Flex>
     </Container>
