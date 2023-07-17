@@ -135,7 +135,7 @@ const Home: NextPage = () => {
                 >{`Buy Ticket(s)`}</Web3Button>
               </Flex>
             ) : (
-              <Text fontSize={"xl"}>Connect your wallet to buy entries!</Text>
+              <Text fontSize={"xl"}>Connect your wallet to buy tickets!</Text>
             )}
             {!isLoadingTotalEntries && (
               <Text

@@ -18,7 +18,10 @@ const EntryCard: React.FC<EntryCardProps> = ({ walletAddress }) => {
   };
 
   return (
-    <Card>
+    <Card
+      p={8}
+      mb={4}
+    >
       {!isLoadingNumberOfEntries && (
         <Flex
           flexDirection={"row"}
