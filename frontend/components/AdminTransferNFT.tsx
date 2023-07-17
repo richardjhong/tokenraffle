@@ -2,6 +2,7 @@ import {
   ThirdwebNftMedia,
   Web3Button,
   useContract,
+  useContractEvents,
   useContractMetadata,
   useContractRead,
   useNFT,
@@ -36,13 +37,11 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
     tokenId,
   );
 
-  // const unsubscribe = raffleContract!.events.addEventListener?.(
-  //   "RequestFulfilled",
-  //   (event) => {
-  //     console.log("event: ", event);
-  //     // raffleContract?.call("selectWinner");
-  //   },
-  // );
+  const { data: requestFulfilledData, isLoading: isLoadingRequestFulfilled } =
+    useContractEvents(raffleContract, "RequestFulfilled");
+
+  if (!isLoadingRequestFulfilled && requestFulfilledData)
+    console.log("let us see: ", requestFulfilledData);
 
   return (
     <Box>
@@ -71,8 +70,6 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
         contractAddress={RAFFLE_CONTRACT_ADDRESS}
         action={async () => {
           await raffleContract?.call("requestRandomWords");
-
-          // if (raffleContract) await unsubscribe();
         }}
         isDisabled={raffleStatus}
       >
