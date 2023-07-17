@@ -21,6 +21,7 @@ import { ethers } from "ethers";
 import RaffleStatus from "../components/RaffleStatus";
 import { useState } from "react";
 import PrizeNFT from "../components/PrizeNFT";
+import CurrentEntries from "../components/CurrentEntries";
 
 const Home: NextPage = () => {
   const address = useAddress();
@@ -151,7 +152,8 @@ const Home: NextPage = () => {
         mt={"40px"}
         textAlign={"center"}
       >
-        <Text fontSize={"xl"}>Current Raffle Participants:</Text>
+        <Text fontSize={"xl"}>Current Raffle Entries:</Text>
+        <CurrentEntries />
       </Stack>
     </Container>
   );

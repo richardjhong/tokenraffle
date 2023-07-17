@@ -26,10 +26,7 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
     "raffleStatus",
   );
 
-  const { contract: prizeNFTContract } = useContract(
-    nftContractAddress,
-    "nft-drop",
-  );
+  const { contract: prizeNFTContract } = useContract(nftContractAddress);
 
   const { data: prizeNFTContractMetadata } =
     useContractMetadata(prizeNFTContract);
@@ -65,14 +62,9 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
       <Web3Button
         contractAddress={RAFFLE_CONTRACT_ADDRESS}
         action={async () => {
-          await prizeNFTContract?.setApprovalForToken(
-            RAFFLE_CONTRACT_ADDRESS,
-            tokenId,
-          );
-
           await raffleContract?.call("selectWinner");
         }}
-        isDisabled={!raffleStatus}
+        isDisabled={raffleStatus}
       >
         Select Winner
       </Web3Button>

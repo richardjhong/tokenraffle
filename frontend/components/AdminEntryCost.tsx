@@ -46,6 +46,7 @@ const AdminEntryCost = () => {
           ])
         }
         isDisabled={raffleStatus}
+        onSuccess={resetEntryCost}
       >
         Update Entry Cost
       </Web3Button>
