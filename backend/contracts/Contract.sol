@@ -131,7 +131,7 @@ contract NFTRaffleContract is VRFConsumerBaseV2 {
         address winner = playerSelector[winnerIndex];
         emit WinnerSelected(winner);
 
-        ERC721Base(nftAddress).transferFrom(owner, winner, nftId);
+        ERC721Base(nftAddress).transferFrom(address(this), winner, nftId);
         resetContract();
     }
 

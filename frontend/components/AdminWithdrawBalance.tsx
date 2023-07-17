@@ -26,7 +26,6 @@ const AdminWithdrawBalance = () => {
       <Web3Button
         contractAddress={RAFFLE_CONTRACT_ADDRESS}
         action={(contract) => contract.call("withdrawBalance")}
-        isDisabled={true}
       >
         Withdraw Balance
       </Web3Button>
