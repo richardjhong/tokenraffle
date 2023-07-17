@@ -1,5 +1,4 @@
 import { useContract, useContractRead } from "@thirdweb-dev/react";
-import React from "react";
 import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 import { Container } from "@chakra-ui/react";
 import EntryCard from "./EntryCard";
