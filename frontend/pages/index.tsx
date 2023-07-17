@@ -18,10 +18,8 @@ import {
 } from "@thirdweb-dev/react";
 import { HERO_IMAGE_URL, RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 import { ethers } from "ethers";
-import RaffleStatus from "../components/RaffleStatus";
+import { RaffleStatus, PrizeNFT, CurrentEntries } from "../components/";
 import { useState } from "react";
-import PrizeNFT from "../components/PrizeNFT";
-import CurrentEntries from "../components/CurrentEntries";
 
 const Home: NextPage = () => {
   const address = useAddress();

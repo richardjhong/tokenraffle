@@ -1,5 +1,5 @@
 import { Web3Button, useContract, useContractRead } from "@thirdweb-dev/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 import { Box, Input, Stack, Text } from "@chakra-ui/react";
 import { ethers } from "ethers";

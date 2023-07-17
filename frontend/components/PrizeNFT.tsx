@@ -1,5 +1,4 @@
 import { Box, Card, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
-import React from "react";
 import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 import {
   ThirdwebNftMedia,

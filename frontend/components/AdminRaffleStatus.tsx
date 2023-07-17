@@ -1,6 +1,6 @@
 import { Web3Button, useContract, useContractRead } from "@thirdweb-dev/react";
 import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Card, Input, Stack, Text } from "@chakra-ui/react";
 import RaffleStatus from "./RaffleStatus";
 

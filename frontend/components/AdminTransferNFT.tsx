@@ -36,6 +36,14 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
     tokenId,
   );
 
+  // const unsubscribe = raffleContract!.events.addEventListener?.(
+  //   "RequestFulfilled",
+  //   (event) => {
+  //     console.log("event: ", event);
+  //     // raffleContract?.call("selectWinner");
+  //   },
+  // );
+
   return (
     <Box>
       <Flex
@@ -62,7 +70,9 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
       <Web3Button
         contractAddress={RAFFLE_CONTRACT_ADDRESS}
         action={async () => {
-          await raffleContract?.call("selectWinner");
+          await raffleContract?.call("requestRandomWords");
+
+          // if (raffleContract) await unsubscribe();
         }}
         isDisabled={raffleStatus}
       >
