@@ -36,7 +36,7 @@ const AdminEntryCost = () => {
       <Input
         type='number'
         value={entryCostValue}
-        onChange={(e) => setEntryCostValue(parseInt(e.target.value))}
+        onChange={(e) => setEntryCostValue(parseFloat(e.target.value))}
       />
       <Web3Button
         contractAddress={RAFFLE_CONTRACT_ADDRESS}
