@@ -37,12 +37,6 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
     tokenId,
   );
 
-  const { data: requestFulfilledData, isLoading: isLoadingRequestFulfilled } =
-    useContractEvents(raffleContract, "RequestFulfilled");
-
-  if (!isLoadingRequestFulfilled && requestFulfilledData)
-    console.log("let us see: ", requestFulfilledData);
-
   return (
     <Box>
       <Flex

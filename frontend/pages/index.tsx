@@ -16,13 +16,14 @@ import {
   useContract,
   useContractRead,
 } from "@thirdweb-dev/react";
-import { HERO_IMAGE_URL, RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
+import { HERO_IMAGE_URL, RAFFLE_CONTRACT_ADDRESS } from "../const";
 import { ethers } from "ethers";
 import { RaffleStatus, PrizeNFT, CurrentEntries } from "../components/";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Home: NextPage = () => {
   const address = useAddress();
+  const [mounted, setMounted] = useState<boolean>(false);
 
   const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
 
@@ -51,6 +52,12 @@ const Home: NextPage = () => {
   const decreaseEntryAmount = () => {
     if (entryAmount > 0) setEntryAmount(entryAmount - 1);
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <></>;
 
   return (
     <Container

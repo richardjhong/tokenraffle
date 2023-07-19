@@ -5,26 +5,30 @@ import {
   AdminWithdrawBalance,
   AdminRaffleWinner,
 } from "../components/";
-import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useAccount, useContractRead } from "wagmi";
+import { TOKENRAFFLE_CONTRACT_ABI } from "../const";
 
 const Admin = () => {
   const router = useRouter();
 
-  const address = useAddress();
+  const { address, isConnecting, isDisconnected } = useAccount();
 
-  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
-
-  const { data: owner, isLoading: isLoadingOwner } = useContractRead(
-    contract,
-    "owner",
-  );
+  const {
+    data: ownerAddress,
+    isError,
+    isLoading,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "owner",
+  });
 
   useEffect(() => {
-    if (!isLoadingOwner && owner != address) router.push("/");
-  }, [address, owner, isLoadingOwner, router]);
+    if (!isLoading && ownerAddress != address) router.push("/");
+  }, [address, ownerAddress, isLoading, router]);
 
   return (
     <Container

@@ -1,22 +1,30 @@
 import { Container, Flex, Text } from "@chakra-ui/react";
-import {
-  ConnectWallet,
-  useAddress,
-  useContract,
-  useContractRead,
-} from "@thirdweb-dev/react";
 import Link from "next/link";
-import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
+import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
+import { Web3Button } from "@web3modal/react";
+import { useAccount, useContractRead } from "wagmi";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const address = useAddress();
+  const [mounted, setMounted] = useState<boolean>(false);
 
-  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
+  const { address, isConnecting, isDisconnected } = useAccount();
 
-  const { data: owner, isLoading: isLoadingOwner } = useContractRead(
-    contract,
-    "owner",
-  );
+  const {
+    data: ownerAddress,
+    isError,
+    isLoading,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "owner",
+  });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <></>;
 
   return (
     <Container
@@ -35,12 +43,12 @@ const Navbar = () => {
           flexDirection={"row"}
           alignItems={"center"}
         >
-          {!isLoadingOwner && owner == address && (
+          {!isLoading && ownerAddress == address && (
             <Link href={"/admin"}>
               <Text mr={4}>Admin</Text>
             </Link>
           )}
-          <ConnectWallet />
+          <Web3Button />
         </Flex>
       </Flex>
     </Container>

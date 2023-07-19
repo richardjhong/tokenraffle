@@ -1,24 +1,64 @@
-import { Web3Button, useContract, useContractRead } from "@thirdweb-dev/react";
-import { useState } from "react";
-import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
+import { useState, useEffect } from "react";
+import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
 import { Box, Input, Stack, Text } from "@chakra-ui/react";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+import { parseEther } from "viem";
+import { useDebounce } from "../utils/useDebounce";
 
 const AdminEntryCost = () => {
-  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
+  const [mounted, setMounted] = useState<boolean>(false);
 
-  const { data: entryCost, isLoading: isLoadingEntryCost } = useContractRead(
-    contract,
-    "entryCost",
-  );
+  const {
+    data: entryCost,
+    isError: entryCostError,
+    isLoading: isLoadingEntryCost,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "entryCost",
+    watch: true,
+  });
 
-  const { data: raffleStatus } = useContractRead(contract, "raffleStatus");
+  const {
+    data: raffleStatus,
+    isError: raffleStatusError,
+    isLoading: isLoadingRaffleStatus,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "raffleStatus",
+  });
 
   const [entryCostValue, setEntryCostValue] = useState<number>(0);
+  const debouncedEntryCostValue = useDebounce(entryCostValue, 500);
 
   const resetEntryCost = () => {
     setEntryCostValue(0);
   };
+
+  const { config: changeEntryCostConfig } = usePrepareContractWrite({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "changeEntryCost",
+    args: [parseEther(debouncedEntryCostValue.toString())],
+    enabled: Boolean(debouncedEntryCostValue),
+  });
+
+  const { data, write } = useContractWrite(changeEntryCostConfig);
+
+  const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <></>;
 
   return (
     <Stack spacing={4}>
@@ -30,7 +70,7 @@ const AdminEntryCost = () => {
           Entry Cost:
         </Text>
         {!isLoadingEntryCost && (
-          <Text>{ethers.utils.formatEther(entryCost)} ETH</Text>
+          <Text>{ethers.utils.formatEther(entryCost as BigNumber)} ETH</Text>
         )}
       </Box>
       <Input
@@ -38,18 +78,15 @@ const AdminEntryCost = () => {
         value={entryCostValue}
         onChange={(e) => setEntryCostValue(parseFloat(e.target.value))}
       />
-      <Web3Button
-        contractAddress={RAFFLE_CONTRACT_ADDRESS}
-        action={(contract) =>
-          contract.call("changeEntryCost", [
-            ethers.utils.parseEther(entryCostValue.toString()),
-          ])
-        }
-        isDisabled={raffleStatus}
-        onSuccess={resetEntryCost}
+      <button
+        onClick={() => {
+          write?.();
+        }}
+        disabled={(raffleStatus as boolean) || !write}
       >
-        Update Entry Cost
-      </Web3Button>
+        {isLoading && "Loading..."}
+        {!isLoading && "Update Entry Cost"}
+      </button>
     </Stack>
   );
 };
