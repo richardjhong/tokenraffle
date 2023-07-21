@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
 import { Box, Input, Stack, Text } from "@chakra-ui/react";
-import { BigNumber, ethers } from "ethers";
 import {
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { parseEther } from "viem";
+import { parseEther, formatUnits } from "viem";
 import { useDebounce } from "../utils/useDebounce";
 
 const AdminEntryCost = () => {
@@ -70,7 +69,7 @@ const AdminEntryCost = () => {
           Entry Cost:
         </Text>
         {!isLoadingEntryCost && (
-          <Text>{ethers.utils.formatEther(entryCost as BigNumber)} ETH</Text>
+          <Text>{formatUnits(entryCost as bigint, 18)} ETH</Text>
         )}
       </Box>
       <Input
@@ -84,7 +83,7 @@ const AdminEntryCost = () => {
         }}
         disabled={(raffleStatus as boolean) || !write}
       >
-        {isLoading && "Loading..."}
+        {isLoading && "Updating..."}
         {!isLoading && "Update Entry Cost"}
       </button>
     </Stack>
