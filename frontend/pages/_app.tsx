@@ -3,6 +3,7 @@ import { ThirdwebProvider } from "@thirdweb-dev/react/evm";
 import { Sepolia } from "@thirdweb-dev/chains";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
+import Providers from "../providers/Providers";
 
 // This is the chain your dApp will work on.
 // Change this to the chain your app is built for.
@@ -13,8 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider activeChain={activeChain}>
       <ChakraProvider>
-        <Navbar />
-        <Component {...pageProps} />
+        <Providers>
+          <Navbar />
+          <Component {...pageProps} />
+        </Providers>
       </ChakraProvider>
     </ThirdwebProvider>
   );

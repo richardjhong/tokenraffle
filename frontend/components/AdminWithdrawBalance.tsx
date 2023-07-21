@@ -1,13 +1,44 @@
 import { Box, Stack, Text } from "@chakra-ui/react";
-import { Web3Button, useContract, useContractRead } from "@thirdweb-dev/react";
-import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
-import { ethers } from "ethers";
+import React, { useState, useEffect } from "react";
+import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
+import {
+  useContractRead,
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+import { formatUnits } from "viem";
 
 const AdminWithdrawBalance = () => {
-  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
+  const [emptyBalance, setEmptyBalance] = useState<boolean>(false);
 
-  const { data: contractBalance, isLoading: isLoadingContractBalance } =
-    useContractRead(contract, "getBalance");
+  const {
+    data: contractBalance,
+    isError: contractBalanceError,
+    isLoading: isLoadingContractBalance,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "getBalance",
+    watch: true,
+  });
+
+  const { config: withdrawBalanceConfig } = usePrepareContractWrite({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "withdrawBalance",
+    enabled: !emptyBalance,
+  });
+
+  const { data, write } = useContractWrite(withdrawBalanceConfig);
+
+  const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash });
+
+  useEffect(() => {
+    contractBalance === BigInt(0)
+      ? setEmptyBalance(true)
+      : setEmptyBalance(false);
+  }, [contractBalance]);
 
   return (
     <Stack spacing={4}>
@@ -19,15 +50,16 @@ const AdminWithdrawBalance = () => {
           Contract Balance:
         </Text>
         {!isLoadingContractBalance && (
-          <Text>{ethers.utils.formatEther(contractBalance)} ETH</Text>
+          <Text>{formatUnits(contractBalance as bigint, 18)} ETH</Text>
         )}
       </Box>
-      <Web3Button
-        contractAddress={RAFFLE_CONTRACT_ADDRESS}
-        action={(contract) => contract.call("withdrawBalance")}
+      <button
+        onClick={() => write?.()}
+        disabled={emptyBalance}
       >
-        Withdraw Balance
-      </Web3Button>
+        {isLoading && "Withdrawing funds"}
+        {!isLoading && "Withdraw Balance"}
+      </button>
     </Stack>
   );
 };

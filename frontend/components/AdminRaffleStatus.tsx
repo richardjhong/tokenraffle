@@ -1,12 +1,21 @@
-import { Web3Button, useContract, useContractRead } from "@thirdweb-dev/react";
-import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
+import { Web3Button } from "@thirdweb-dev/react";
+import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
 import { useState } from "react";
 import { Box, Card, Input, Stack, Text } from "@chakra-ui/react";
 import RaffleStatus from "./RaffleStatus";
+import { useContractRead } from "wagmi";
 
 const AdminRaffleStatus = () => {
-  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
-  const { data: raffleStatus } = useContractRead(contract, "raffleStatus");
+  const {
+    data: raffleStatus,
+    isError: raffleStatusError,
+    isLoading: isLoadingRaffleStatus,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "raffleStatus",
+    watch: true,
+  });
 
   const [nftContractAddress, setNftContractAddress] = useState<string>("");
   const [tokenId, setTokenId] = useState<number>(0);
@@ -30,7 +39,7 @@ const AdminRaffleStatus = () => {
       >
         Raffle Status:
       </Text>
-      <RaffleStatus raffleStatus={raffleStatus} />
+      <RaffleStatus raffleStatus={raffleStatus as boolean} />
       {!raffleStatus ? (
         <Stack
           spacing={4}
