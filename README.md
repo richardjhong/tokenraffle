@@ -51,7 +51,7 @@
 
 ## About The Project
 
-This project started off with following along the YouTube tutorial listed in the <a href="#acknowledgments">Acknowledgments</a> section. I then branched off with refactoring portions of the frontend with wagmi and viem libraries. 
+This project started off with following along the YouTube tutorial listed in the <a href="#acknowledgments">Acknowledgments</a> section. I initially started off with using the Thirdweb SDK for both the frontend and backend; I then branched off with refactoring portions of the frontend with wagmi and viem libraries. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -61,13 +61,12 @@ This project started off with following along the YouTube tutorial listed in the
 - [![Next][Next.js]][Next-url]
 - [![React][React.js]][React-url]
 - [![TypeScript][TypeScript.js]][TypeScript-url]
+- [![Thirdweb-SDK][Thirdweb-SDK]][Thirdweb-SDK-url]
 - [![Chakra-UI][Chakra-UI]][Chakra-UI-url]
 - [![Hardhat][Hardhat.js]][Hardhat-url]
 - [![WalletConnect][WalletConnect]][WalletConnect-url]
 - [![Wagmi][Wagmi]][Wagmi-url]
 - [![Viem][Viem.sh]][Viem-url]
-- [![Chakra-UI][Chakra-UI]][Chakra-UI-url]
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -153,6 +152,8 @@ The main highlights of this project are:
 * [ ] Finish migrating to using [wagmi](https://wagmi.sh/) hooks over using thirdweb-react/dev
 * [ ] Create NFTs with metadata (the project in its current state uses placeholder values as the NFTs used for testing do not have metadata).
 * [ ] Create unit testing with hardhat within the backend including the use of mock VRF aggregators.
+* [ ] Recreate project without use of Thirdweb SDK.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -205,7 +206,7 @@ Project Link: [https://github.com/richardjhong/tokenraffle](https://github.com/r
 [Ethereum-url]: https://ethereum.org/en/
 [Hardhat.js]: https://img.shields.io/badge/hardhat-js
 [Hardhat-url]: https://hardhat.org/
-[WalletConnect]: https://img.shields.io/badge/WalletConnect-%233B99FC?style=for-the-badge&logo=walletconnect
+[WalletConnect]: https://img.shields.io/badge/WalletConnect-%233B99FC?&logo=walletconnect
 [WalletConnect-url]: https://walletconnect.com/
 [TypeScript.js]: https://img.shields.io/badge/TypeScript-blue?style=for-the-badge&logo=typescript&logoColor=white
 [TypeScript-url]: https://www.typescriptlang.org/
@@ -215,3 +216,5 @@ Project Link: [https://github.com/richardjhong/tokenraffle](https://github.com/r
 [Chakra-UI-URL]: https://tailwindcss.com/
 [Viem.sh]: https://img.shields.io/badge/viem-sh?color=1E1E20
 [Viem-url]: https://viem.sh/
+[Thirdweb-SDK]: https://img.shields.io/badge/ThirdWeb-purple
+[Thirdweb-SDK-url]: https://thirdweb.com/sdk
