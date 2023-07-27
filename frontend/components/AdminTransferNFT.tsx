@@ -136,7 +136,6 @@ const AdminTransferNFT: React.FC<TransferNFTProps> = ({
           write?.();
           setWinnerSelectionReady(false);
         }}
-        disabled={!winnerSelectionReady || !write}
       >
         {isLoading && "Selecting..."}
         {!isLoading && "Select Winner"}

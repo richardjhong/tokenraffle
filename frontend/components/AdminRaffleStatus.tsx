@@ -1,21 +1,14 @@
-import { Web3Button } from "@thirdweb-dev/react";
+import { Web3Button, useContract, useContractRead } from "@thirdweb-dev/react";
 import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Card, Input, Stack, Text } from "@chakra-ui/react";
 import RaffleStatus from "./RaffleStatus";
-import { useContractRead } from "wagmi";
 
 const AdminRaffleStatus = () => {
-  const {
-    data: raffleStatus,
-    isError: raffleStatusError,
-    isLoading: isLoadingRaffleStatus,
-  } = useContractRead({
-    address: RAFFLE_CONTRACT_ADDRESS,
-    abi: TOKENRAFFLE_CONTRACT_ABI,
-    functionName: "raffleStatus",
-    watch: true,
-  });
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
+  const { data: raffleStatus } = useContractRead(contract, "raffleStatus");
 
   const [nftContractAddress, setNftContractAddress] = useState<string>("");
   const [tokenId, setTokenId] = useState<number>(0);
@@ -24,6 +17,12 @@ const AdminRaffleStatus = () => {
     setNftContractAddress("");
     setTokenId(0);
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <></>;
 
   return (
     <Card
