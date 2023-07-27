@@ -18,6 +18,9 @@ const Navbar = () => {
     address: RAFFLE_CONTRACT_ADDRESS,
     abi: TOKENRAFFLE_CONTRACT_ABI,
     functionName: "owner",
+    onError(error) {
+      console.log("Error", error);
+    },
   });
 
   useEffect(() => {

@@ -173,7 +173,7 @@ contract NFTRaffleContract is VRFConsumerBaseV2 {
     }
 
     function resetEntryCounts() private {
-        for (uint256 i = 0; i < players.length; i++) entryCount[players[i]] = 0;
+        for (uint256 i = 0; i < players.length; i++) delete entryCount[players[i]];
     }
 
     function changeEntryCost(uint256 _newCost) public onlyOwner {
@@ -200,6 +200,7 @@ contract NFTRaffleContract is VRFConsumerBaseV2 {
     }
 
     function resetContract() public onlyOwner {
+        resetEntryCounts();
         delete playerSelector;
         delete players;
         raffleStatus = false;
@@ -207,6 +208,5 @@ contract NFTRaffleContract is VRFConsumerBaseV2 {
         nftId = 0;
         entryCost = 0;
         totalEntries = 0;
-        resetEntryCounts();
     }
 }

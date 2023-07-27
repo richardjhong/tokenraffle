@@ -70,15 +70,11 @@ const Home: NextPage = () => {
         minH={"60vh"}
       >
         <Flex>
-          {raffleStatus ? (
-            <PrizeNFT />
-          ) : (
-            <MediaRenderer
-              src={HERO_IMAGE_URL}
-              width='100%'
-              height='100%'
-            />
-          )}
+          <MediaRenderer
+            src={HERO_IMAGE_URL}
+            width='100%'
+            height='100%'
+          />
         </Flex>
         <Flex
           justifyContent={"center"}
