@@ -67,6 +67,7 @@ This project started off with following along the YouTube tutorial listed in the
 - [![WalletConnect][WalletConnect]][WalletConnect-url]
 - [![Wagmi][Wagmi]][Wagmi-url]
 - [![Viem][Viem.sh]][Viem-url]
+- [![Chainlink][Chainlink]][Chainlink-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -137,7 +138,7 @@ The project contract also uses Chainlink's VRF based on a subscription model whi
 
 The main highlights of this project are:
 
-* The deployer of the contract will have access to the admin page. In this page, the contract owner can change the entry cost of the raffle (a raffle cannot be in progress) as well as set the nft to be raffled via its address and id (the contract must be considered the owner of the NFT that is being raffled rather than the contract owner). Once the contract owner starts the raffle, other wallets can start entering the raffle.
+* The deployer of the contract will have access to the admin page. In this page, the contract owner can change the entry cost of the raffle (a raffle cannot be in progress) as well as set the NFT to be raffled via its address and id (the contract must be considered the owner of the NFT that is being raffled rather than the contract owner). Once the contract owner starts the raffle, other wallets can start entering the raffle.
 
 * Once the raffle has started, wallet owners can buy entries for the current raffle, assuming that the wallet has enough balance for the cost of entries (entries * entryCost).
 
@@ -218,3 +219,5 @@ Project Link: [https://github.com/richardjhong/tokenraffle](https://github.com/r
 [Viem-url]: https://viem.sh/
 [Thirdweb-SDK]: https://img.shields.io/badge/ThirdWeb-purple
 [Thirdweb-SDK-url]: https://thirdweb.com/sdk
+[Chainlink]: https://img.shields.io/badge/Chainlink-%23375BD2?logo=chainlink
+[Chainlink-url]: https://chain.link/
