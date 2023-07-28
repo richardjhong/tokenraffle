@@ -213,7 +213,7 @@ Project Link: [https://github.com/richardjhong/tokenraffle](https://github.com/r
 [Wagmi]: https://img.shields.io/badge/wagmi-black
 [Wagmi-url]: https://wagmi.sh/
 [Chakra-UI]: https://img.shields.io/badge/Chakra_UI-%23319795
-[Chakra-UI-URL]: https://tailwindcss.com/
+[Chakra-UI-URL]: https://chakra-ui.com/
 [Viem.sh]: https://img.shields.io/badge/viem-sh?color=1E1E20
 [Viem-url]: https://viem.sh/
 [Thirdweb-SDK]: https://img.shields.io/badge/ThirdWeb-purple
