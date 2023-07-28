@@ -81,7 +81,7 @@ To get a local copy up and running follow these steps:
 
 The frontend is built with a combination of thirdweb-react/dev and wagmi/viem libraries. The project also leverages WalletConnect and uses an API project key which can be created [here](https://cloud.walletconnect.com/app).
 
-The project contract also uses Chainlink's VRF based on a subscription model which requires creating a subscription which can be done [here](https://vrf.chain.link/). Read the documentation and be sure to supply LINK as currency for the VRF requests. You can get free LINK [here](https://faucets.chain.link/).
+The project contract also uses Chainlink's VRF based on a subscription model which requires creating a [subscription](https://vrf.chain.link/). Read the documentation and be sure to supply LINK as currency for the VRF requests. You can get free LINK with this [faucet](https://faucets.chain.link/).
 
 ### Installation
 
@@ -99,7 +99,7 @@ The project contract also uses Chainlink's VRF based on a subscription model whi
    npx thirdweb@latest deploy
    ```
 
-4. After running step 3, the CLI should show a link to continue the deployment on thirdweb. Here you will need to supply the entryCost and subscription ID for the VRF. The entryCost should be in wei units; here is a [link](https://eth-converter.com/) to convert ether to wei uints. 
+4. After running step 3, the CLI should show a link to continue the deployment on thirdweb. Here you will need to supply the entryCost and subscription ID for the VRF. The entryCost should be in wei units; you can use this [eth converter](https://eth-converter.com/). 
 
 5. Add the contract address as a consumer to the VRF subscription. 
   
