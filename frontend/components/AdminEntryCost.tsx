@@ -51,7 +51,10 @@ const AdminEntryCost = () => {
 
   const { data, write } = useContractWrite(changeEntryCostConfig);
 
-  const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash });
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+    onSuccess: () => resetEntryCost(),
+  });
 
   useEffect(() => {
     setMounted(true);

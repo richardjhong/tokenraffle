@@ -1,17 +1,24 @@
 import { Card, Flex, Text } from "@chakra-ui/react";
-import { useContract, useContractRead } from "@thirdweb-dev/react";
+// import { useContract, useContractRead } from "@thirdweb-dev/react";
 import React from "react";
-import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
+import { useContractRead } from "wagmi";
+import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
 
 type EntryCardProps = {
   walletAddress: string;
 };
 
 const EntryCard: React.FC<EntryCardProps> = ({ walletAddress }) => {
-  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
-
-  const { data: numberOfEntries, isLoading: isLoadingNumberOfEntries } =
-    useContractRead(contract, "entryCount", [walletAddress]);
+  const {
+    data: numberOfEntries,
+    isError: numberOfEntriesError,
+    isLoading: isLoadingNumberOfEntries,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "entryCount",
+    args: [walletAddress as `0x${string}`],
+  });
 
   const truncateAddress = (address: string) => {
     return address.slice(0, 6) + "..." + address.slice(-4);
@@ -34,7 +41,7 @@ const EntryCard: React.FC<EntryCardProps> = ({ walletAddress }) => {
           >
             {truncateAddress(walletAddress)}
           </Text>
-          <Text>Entries: {numberOfEntries.toNumber()}</Text>
+          <Text>Entries: {Number(numberOfEntries)}</Text>
         </Flex>
       )}
     </Card>

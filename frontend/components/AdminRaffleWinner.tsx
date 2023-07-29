@@ -1,17 +1,28 @@
 import { Box, Card, Text } from "@chakra-ui/react";
-import { useContract, useContractRead } from "@thirdweb-dev/react";
-import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
+import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
 import AdminTransferNFT from "./AdminTransferNFT";
+import { useContractRead } from "wagmi";
 
 const AdminRaffleWinner = () => {
-  const { contract: raffleContract } = useContract(RAFFLE_CONTRACT_ADDRESS);
+  const {
+    data: prizeNFTContractAddress,
+    isError: prizeNFTContractError,
+    isLoading: isLoadingPrizeNFTContract,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "nftAddress",
+  });
 
-  const { data: prizeNFTContractAddress } = useContractRead(
-    raffleContract,
-    "nftAddress",
-  );
-
-  const { data: prizeNFTTokenId } = useContractRead(raffleContract, "nftId");
+  const {
+    data: prizeNFTTokenId,
+    isError: prizeNFTTokenIdError,
+    isLoading: isLoadingPrizeNFTTokenId,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "nftId",
+  });
 
   return (
     <Card p={4}>
@@ -32,8 +43,8 @@ const AdminRaffleWinner = () => {
         </Box>
       ) : (
         <AdminTransferNFT
-          nftContractAddress={prizeNFTContractAddress}
-          tokenId={prizeNFTTokenId}
+          nftContractAddress={prizeNFTContractAddress as string}
+          tokenId={prizeNFTTokenId?.toString() as string}
         />
       )}
     </Card>

@@ -1,5 +1,5 @@
 import { Box, Stack, Text } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
 import {
   useContractRead,
@@ -10,35 +10,27 @@ import {
 import { formatUnits } from "viem";
 
 const AdminWithdrawBalance = () => {
-  const [emptyBalance, setEmptyBalance] = useState<boolean>(false);
-
   const {
     data: contractBalance,
     isError: contractBalanceError,
     isLoading: isLoadingContractBalance,
+    refetch: refetchContractBalance,
   } = useContractRead({
     address: RAFFLE_CONTRACT_ADDRESS,
     abi: TOKENRAFFLE_CONTRACT_ABI,
     functionName: "getBalance",
-    watch: true,
   });
 
   const { config: withdrawBalanceConfig } = usePrepareContractWrite({
     address: RAFFLE_CONTRACT_ADDRESS,
     abi: TOKENRAFFLE_CONTRACT_ABI,
     functionName: "withdrawBalance",
-    enabled: !emptyBalance,
+    enabled: contractBalance !== BigInt(0),
   });
 
   const { data, write } = useContractWrite(withdrawBalanceConfig);
 
   const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash });
-
-  useEffect(() => {
-    contractBalance === BigInt(0)
-      ? setEmptyBalance(true)
-      : setEmptyBalance(false);
-  }, [contractBalance]);
 
   return (
     <Stack spacing={4}>
@@ -54,8 +46,11 @@ const AdminWithdrawBalance = () => {
         )}
       </Box>
       <button
-        onClick={() => write?.()}
-        disabled={emptyBalance}
+        onClick={async () => {
+          await write?.();
+          await refetchContractBalance();
+        }}
+        disabled={contractBalance == BigInt(0)}
       >
         {isLoading && "Withdrawing funds"}
         {!isLoading && "Withdraw Balance"}

@@ -1,22 +1,37 @@
-import { useContract, useContractRead } from "@thirdweb-dev/react";
-import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
+import { RAFFLE_CONTRACT_ADDRESS, TOKENRAFFLE_CONTRACT_ABI } from "../const";
 import { Container } from "@chakra-ui/react";
 import EntryCard from "./EntryCard";
+import { useContractRead } from "wagmi";
+import { useEffect } from "react";
 
 const CurrentEntries = () => {
-  const { contract } = useContract(RAFFLE_CONTRACT_ADDRESS);
+  const {
+    data: currentEntries,
+    isError: currentEntriesError,
+    isLoading: isLoadingCurrentEntries,
+  } = useContractRead({
+    address: RAFFLE_CONTRACT_ADDRESS,
+    abi: TOKENRAFFLE_CONTRACT_ABI,
+    functionName: "getPlayers",
+    watch: true,
+  });
 
-  const { data: currentEntries, isLoading: isLoadingCurrentEntries } =
-    useContractRead(contract, "getPlayers");
   return (
     <Container py={8}>
-      {!isLoadingCurrentEntries &&
-        currentEntries.map((entry: string, index: number) => (
-          <EntryCard
-            key={index}
-            walletAddress={entry}
-          />
-        ))}
+      {!isLoadingCurrentEntries ? (
+        Array.isArray(currentEntries) ? (
+          currentEntries.map((entry: string, index: number) => (
+            <EntryCard
+              key={index}
+              walletAddress={entry}
+            />
+          ))
+        ) : (
+          <p>No entries found.</p>
+        )
+      ) : (
+        <p>Loading entries...</p>
+      )}
     </Container>
   );
 };
