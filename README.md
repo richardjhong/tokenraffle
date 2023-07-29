@@ -18,7 +18,7 @@
     <br />
     <a href="https://tokenraffle-blockchain.vercel.app/">View Demo</a>
     ·
-    <a href="https://sepolia.etherscan.io/address/0x7E3168A705fF4e9249d50017467b999f4a06D64F">View Contract</a>
+    <a href="https://sepolia.etherscan.io/address/0xdE5E56c2BFfe6F570b14EcC9935b109fB55Ec68B">View Contract</a>
   </p>
 </div>
 
@@ -219,5 +219,5 @@ Project Link: [https://github.com/richardjhong/tokenraffle](https://github.com/r
 [Viem-url]: https://viem.sh/
 [Thirdweb-SDK]: https://img.shields.io/badge/ThirdWeb-purple
 [Thirdweb-SDK-url]: https://thirdweb.com/sdk
-[Chainlink]: https://img.shields.io/badge/Chainlink-%23375BD2?logo=chainlink
+[Chainlink]: https://img.shields.io/badge/Chainlink-%23375BD2?style=for-the-badge&logo=chainlink
 [Chainlink-url]: https://chain.link/

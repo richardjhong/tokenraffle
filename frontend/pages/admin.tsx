@@ -6,13 +6,15 @@ import {
   AdminRaffleWinner,
 } from "../components/";
 import { RAFFLE_CONTRACT_ADDRESS } from "../const/addresses";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAccount, useContractRead } from "wagmi";
 import { TOKENRAFFLE_CONTRACT_ABI } from "../const";
 
 const Admin = () => {
   const router = useRouter();
+
+  const [mounted, setMounted] = useState<boolean>(false);
 
   const { address, isConnecting, isDisconnected } = useAccount();
 
@@ -29,6 +31,12 @@ const Admin = () => {
   useEffect(() => {
     if (!isLoading && ownerAddress != address) router.push("/");
   }, [address, ownerAddress, isLoading, router]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <></>;
 
   return (
     <Container
