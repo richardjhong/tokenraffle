@@ -149,7 +149,7 @@ The main highlights of this project are:
 <!-- ROADMAP -->
 
 ## Roadmap
-* [✔️] Finish migrating to using [wagmi](https://wagmi.sh/) hooks over using thirdweb-react/dev
+* [ ] Finish migrating to using [wagmi](https://wagmi.sh/) hooks over using thirdweb-react/dev
 * [ ] Create NFTs with metadata (the project in its current state uses placeholder values as the NFTs used for testing do not have metadata).
 * [ ] Create unit testing with hardhat within the backend including the use of mock VRF aggregators.
 * [ ] Recreate project without use of Thirdweb SDK.
